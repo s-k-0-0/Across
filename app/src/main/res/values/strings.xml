@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Across The Internet</string>
+    <string name="app_tagline">Bookmark &amp; Link Saver</string>
+    <string name="search_placeholder">Search saved links...</string>
+    <string name="saving_link_notification">Saving shared link...</string>
+    <string name="save_manual_title">Save New Link</string>
+    <string name="save_manual_url">Paste URL</string>
+    <string name="save_action">Save Link</string>
+    <string name="empty_archive_title">No links saved yet</string>
+    <string name="empty_archive_desc">Share links from any app or paste a URL above.</string>
+    <string name="clear_all">Clear All</string>
+</resources>

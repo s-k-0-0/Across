@@ -1,0 +1,6 @@
+{
+  "name": "Across The Internet",
+  "description": "Tactical link archiving across the internet with auto-tagging, OpenGraph scraper, and offline full-text search.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
