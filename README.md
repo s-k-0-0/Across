@@ -109,6 +109,3 @@ app/src/main/java/com/kax/across/
    ```
 
 ---
-
-## License
-
