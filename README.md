@@ -1,6 +1,6 @@
 ﻿# Across The Internet
 
-An offline-first Android application designed for bookmarking, metadata extraction, and full-text searching of web content. Across The Internet intercepts shared links from system applications—such as Chrome, YouTube, X (Twitter), Reddit, GitHub, Instagram, and Medium—storing them in a local SQLite database with full-text search indexing and offline availability.
+An offline-first Android application designed for bookmarking, metadata extraction, and full-text searching of web content. Across The Internet intercepts shared links from system applications such as Chrome, YouTube, X (Twitter), Reddit, GitHub, Instagram, and Medium storing them in a local SQLite database with full-text search indexing and offline availability.
 
 ---
 
