@@ -27,6 +27,7 @@ enum class VaultCategory(
     YOUTUBE("YOUTUBE", "SAVED VIDEOS", 1),
     REDDIT("REDDIT", "SAVED THREADS", 3),
     GITHUB("GITHUB", "REPOSITORIES", 1),
+    CHROME_WEB("CHROME & WEB", "FAMOUS DOMAINS", 2),
     ARTICLES("ARTICLES & READS", "OFFLINE READS", 3)
 }
 
@@ -35,6 +36,7 @@ data class CategoryStats(
     val youtubeCount: Int = 0,
     val redditCount: Int = 0,
     val githubCount: Int = 0,
+    val chromeCount: Int = 0,
     val articlesCount: Int = 0
 )
 
@@ -196,6 +198,7 @@ class MainViewModel(
         val ytCount = allActiveItems.count { matchesCategory(it, VaultCategory.YOUTUBE) }
         val redditCount = allActiveItems.count { matchesCategory(it, VaultCategory.REDDIT) }
         val ghCount = allActiveItems.count { matchesCategory(it, VaultCategory.GITHUB) }
+        val chromeCount = allActiveItems.count { matchesCategory(it, VaultCategory.CHROME_WEB) }
         val articlesCount = allActiveItems.count { matchesCategory(it, VaultCategory.ARTICLES) }
 
         MainUiState(
@@ -212,6 +215,7 @@ class MainViewModel(
                 youtubeCount = ytCount,
                 redditCount = redditCount,
                 githubCount = ghCount,
+                chromeCount = chromeCount,
                 articlesCount = articlesCount
             ),
             availableTags = allTags,
@@ -259,11 +263,23 @@ class MainViewModel(
                         corpus.contains("#github") ||
                         corpus.contains("#code")
                 }
+                VaultCategory.CHROME_WEB -> {
+                    corpus.contains("google.com") ||
+                        corpus.contains("wikipedia.org") ||
+                        corpus.contains("stackoverflow.com") ||
+                        corpus.contains("medium.com") ||
+                        corpus.contains("substack.com") ||
+                        corpus.contains("linkedin.com") ||
+                        corpus.contains("chrome") ||
+                        corpus.contains("#chrome") ||
+                        corpus.contains("#web")
+                }
                 VaultCategory.ARTICLES -> {
                     !matchesCategory(item, VaultCategory.X_POSTS) &&
                         !matchesCategory(item, VaultCategory.YOUTUBE) &&
                         !matchesCategory(item, VaultCategory.REDDIT) &&
-                        !matchesCategory(item, VaultCategory.GITHUB)
+                        !matchesCategory(item, VaultCategory.GITHUB) &&
+                        !matchesCategory(item, VaultCategory.CHROME_WEB)
                 }
             }
         }
@@ -414,10 +430,20 @@ class MainViewModel(
         _toastMessage.value = null
     }
 
-    fun enqueueTargetUrl(rawUrl: String) {
-        if (rawUrl.isBlank()) return
-        repository.enqueueScrape(rawUrl)
-        _toastMessage.value = "Saving link & fetching details..."
+    fun enqueueTargetUrl(rawText: String) {
+        if (rawText.isBlank()) return
+        val urls = com.kax.across.util.AutoTagger.extractAllUrlsFromText(rawText)
+        if (urls.isEmpty()) return
+
+        for (url in urls) {
+            repository.enqueueScrape(url)
+        }
+
+        _toastMessage.value = if (urls.size > 1) {
+            "Saved ${urls.size} links! Fetching details..."
+        } else {
+            "Saving link & fetching details..."
+        }
         closeManualAddDialog()
     }
 

@@ -83,21 +83,21 @@ abstract class AppDatabase : RoomDatabase() {
                         ),
                         SavedItem(
                             url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                            title = "Building Adaptive Apps for Foldables and Large Screens",
-                            description = "Complete walkthrough of canonical list-detail layouts, tabletop postures, and WindowSizeClass.",
+                            title = "Rick Astley - Never Gonna Give You Up (Official Music Video)",
+                            description = "The official music video for Rick Astley - Never Gonna Give You Up.",
                             imageUrl = "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
                             siteName = "YouTube",
-                            tags = "#youtube #video #android #ui",
+                            tags = "#youtube #video #music",
                             timestamp = now - 1000 * 60 * 45,
                             isFavorite = true
                         ),
                         SavedItem(
                             url = "https://www.youtube.com/watch?v=9bZkp7q19f0",
-                            title = "SQLite FTS Full-Text Search Internals Explained",
-                            description = "How inverted B-tree indices and prefix tokenizers execute sub-millisecond local queries.",
+                            title = "PSY - GANGNAM STYLE (강남스타일) M/V",
+                            description = "Official Music Video for PSY - GANGNAM STYLE.",
                             imageUrl = "https://i.ytimg.com/vi/9bZkp7q19f0/maxresdefault.jpg",
                             siteName = "YouTube",
-                            tags = "#youtube #video #database #tech",
+                            tags = "#youtube #video #music",
                             timestamp = now - 1000 * 60 * 80,
                             isFavorite = false
                         ),

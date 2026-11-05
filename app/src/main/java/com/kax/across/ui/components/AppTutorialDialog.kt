@@ -20,7 +20,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.DeleteSweep
@@ -57,63 +56,51 @@ import com.kax.across.ui.theme.SecondaryMutedText
 import com.kax.across.ui.theme.SpaceGroteskFamily
 import com.kax.across.ui.theme.SpaceMonoFamily
 
+import androidx.compose.material.icons.outlined.Share
+
 private data class TutorialPage(
     val title: String,
     val subtitle: String,
     val description: String,
-    val targetPointer: String,
     val icon: ImageVector,
     val badge: String
 )
 
 private val tutorialPages = listOf(
     TutorialPage(
-        title = "App Guide Icon",
-        subtitle = "TOP BAR CONTROL",
-        description = "Tap this Guide button anytime to view features or replay this guided tour.",
-        targetPointer = "▲ POINTING TO TOP RIGHT HELP (?) BUTTON",
-        icon = Icons.AutoMirrored.Outlined.HelpOutline,
-        badge = "1. APP GUIDE"
-    ),
-    TutorialPage(
-        title = "Save Link Button",
-        subtitle = "HERO CARD ACTION",
-        description = "Tap + SAVE to manually paste or type any website, post, or video URL directly.",
-        targetPointer = "▲ POINTING TO + SAVE BUTTON",
-        icon = Icons.Default.Add,
-        badge = "2. + SAVE BUTTON"
-    ),
-    TutorialPage(
-        title = "Platform Categories",
-        subtitle = "AUTOMATIC TILES",
-        description = "Tap any category tile (X, YouTube, Reddit, GitHub, Articles) to filter bookmarks by platform.",
-        targetPointer = "▼ POINTING TO CATEGORY TILES GRID",
+        title = "Welcome to Across The Internet",
+        subtitle = "YOUR BOOKMARK VAULT",
+        description = "Easily save, organize, and search your favorite web links in one place. Your links are automatically categorized by platform with titles, images, and tags.",
         icon = Icons.Outlined.Folder,
-        badge = "3. CATEGORY TILES"
+        badge = "1. WELCOME"
     ),
     TutorialPage(
-        title = "Vault Search & Hashtags",
-        subtitle = "VAULT SEARCH BAR",
-        description = "Type search keywords, URLs, or tap `#hashtags` to find saved links instantly.",
-        targetPointer = "▼ POINTING TO SEARCH INPUT & TAG CHIPS",
+        title = "Save Links From Any App",
+        subtitle = "ANDROID SHARE SHEET",
+        description = "Share links directly from YouTube, X, Reddit, Chrome, Instagram, TikTok, or any browser using the standard Share menu. Links are saved instantly in the background.",
+        icon = Icons.Outlined.Share,
+        badge = "2. SHARE & SAVE"
+    ),
+    TutorialPage(
+        title = "Categories & Fast Search",
+        subtitle = "SEARCH & FILTER",
+        description = "Filter by platform categories (X, YouTube, Reddit, GitHub, Chrome, Articles) or search keywords, URLs, and hashtags to find any link instantly.",
         icon = Icons.Outlined.Search,
-        badge = "4. SEARCH BAR"
+        badge = "3. SEARCH & FILTER"
     ),
     TutorialPage(
-        title = "Link Cards & Safe Delete",
-        subtitle = "CARD ACTION CONTROLS",
-        description = "Tap Trash on any card to delete. A safety prompt ('Are you sure?') will always confirm before deleting.",
-        targetPointer = "▼ POINTING TO LINK CARD TRASH ICON",
+        title = "Link Actions & Safe Delete",
+        subtitle = "EASY MANAGEMENT",
+        description = "Tap any link card to open, copy, or star your favorites. Tapping Trash or Clear All displays an 'Are you sure?' safety prompt before deleting.",
         icon = Icons.Outlined.DeleteSweep,
-        badge = "5. SAFE DELETE"
+        badge = "4. LINK MANAGEMENT"
     ),
     TutorialPage(
         title = "Ready to Get Started?",
         subtitle = "INITIAL SETUP",
         description = "We included sample links so you could explore all features. Choose 'START FRESH' to clear them for your bookmarks, or 'KEEP SAMPLES' to explore.",
-        targetPointer = "SETUP CHOICE",
         icon = Icons.Outlined.BookmarkBorder,
-        badge = "6. SETUP CHOICE"
+        badge = "5. GET STARTED"
     )
 )
 
@@ -126,7 +113,7 @@ fun AppTutorialDialog(
     isReplayMode: Boolean = false
 ) {
     var currentPageIndex by remember { mutableIntStateOf(0) }
-    val pagesList = if (isReplayMode) tutorialPages.take(5) else tutorialPages
+    val pagesList = if (isReplayMode) tutorialPages.take(4) else tutorialPages
     val currentPage = pagesList[currentPageIndex]
     val isLastPage = currentPageIndex == pagesList.lastIndex
 
@@ -144,28 +131,6 @@ fun AppTutorialDialog(
                 .padding(22.dp)
                 .testTag("app_tutorial_dialog")
         ) {
-            // Target Component Pointer Banner
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(PillSurface)
-                    .border(1.dp, CardBorderSubtle, RoundedCornerShape(12.dp))
-                    .padding(vertical = 6.dp, horizontal = 10.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = currentPage.targetPointer,
-                    fontFamily = SpaceMonoFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 10.sp,
-                    letterSpacing = 1.2.sp,
-                    color = PureWhite
-                )
-            }
-
-            Spacer(modifier = Modifier.height(14.dp))
-
             // Header Bar
             Row(
                 modifier = Modifier.fillMaxWidth(),

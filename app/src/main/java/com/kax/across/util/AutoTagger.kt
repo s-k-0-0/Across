@@ -98,4 +98,59 @@ object AutoTagger {
         // Cap to the top 4 most pertinent tags for compact tactical display
         return detectedTags.take(4).joinToString(separator = " ")
     }
+
+    /**
+     * Extracts ALL distinct URLs contained within a text payload.
+     * Splitting multiple concatenated or space/newline-separated URLs into individual clean links.
+     */
+    fun extractAllUrlsFromText(text: String): List<String> {
+        if (text.isBlank()) return emptyList()
+
+        val urls = LinkedHashSet<String>()
+
+        val urlMatcher = java.util.regex.Pattern.compile(
+            """https?://[^\s<>"'{}|\\^`]+""",
+            java.util.regex.Pattern.CASE_INSENSITIVE
+        ).matcher(text)
+
+        while (urlMatcher.find()) {
+            var raw = urlMatcher.group(0) ?: continue
+            while (raw.isNotEmpty() && (raw.endsWith(".") || raw.endsWith(",") || raw.endsWith(")") || raw.endsWith("!") || raw.endsWith(";"))) {
+                raw = raw.dropLast(1)
+            }
+            val clean = sanitizeUrl(raw)
+            if (clean.isNotBlank()) {
+                urls.add(clean)
+            }
+        }
+
+        if (urls.isEmpty()) {
+            val domainMatcher = java.util.regex.Pattern.compile(
+                """\b(?:[a-zA-Z0-9-]+\.)+(?:com|org|net|edu|gov|io|ai|dev|co|me|app|tv|so|xyz)(?:/[^\s<>"'{}|\\^`]*)?""",
+                java.util.regex.Pattern.CASE_INSENSITIVE
+            ).matcher(text)
+
+            while (domainMatcher.find()) {
+                var raw = domainMatcher.group(0) ?: continue
+                while (raw.isNotEmpty() && (raw.endsWith(".") || raw.endsWith(",") || raw.endsWith(")") || raw.endsWith("!") || raw.endsWith(";"))) {
+                    raw = raw.dropLast(1)
+                }
+                val clean = sanitizeUrl(raw)
+                if (clean.isNotBlank()) {
+                    urls.add(clean)
+                }
+            }
+        }
+
+        return urls.toList()
+    }
+
+    private fun sanitizeUrl(url: String): String {
+        val trimmed = url.trim()
+        return if (!trimmed.startsWith("http://") && !trimmed.startsWith("https://")) {
+            "https://$trimmed"
+        } else {
+            trimmed
+        }
+    }
 }
