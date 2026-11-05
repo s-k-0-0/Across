@@ -4,6 +4,9 @@ An offline-first Android application designed for bookmarking, metadata extracti
 
 ---
 
+## Video
+https://drive.google.com/file/d/1nkOlCca1mXj-ugKMWB3cnK4z1MA-NWrw/view?usp=sharing
+
 ## Technical Overview
 
 Across The Internet uses Modern Android Architecture guidelines following the Unidirectional Data Flow (UDF) pattern. Shared URLs are processed through a two-stage pipeline: an immediate synchronous database write for zero-latency UI updates, followed by an asynchronous background job that extracts OpenGraph and HTML metadata.
